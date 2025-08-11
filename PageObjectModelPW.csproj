@@ -38,8 +38,4 @@
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="testcases\" />
-  </ItemGroup>
-
 </Project>

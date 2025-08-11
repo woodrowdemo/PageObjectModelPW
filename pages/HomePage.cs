@@ -6,10 +6,15 @@ namespace PageObjectModelPW.pages
     {
 
         IPage page;
-        public async void FindNewCars( )
+
+        public HomePage(IPage page)
         {
-            await page.Locator("//div[normalize-space()='New Cars']").HoverAsync();
-            await page.Locator("//div[normalize-space()='Find New Cars']").ClickAsync();
+            this.page = page;
+        }
+        public async Task FindNewCars( )
+        {
+            await page.Locator("//*[@id=\"root\"]/div[1]/header/div/nav/ul/li[1]/div").HoverAsync();
+            await page.Locator("//div[contains(text(),'Find New Cars')]").ClickAsync();
         }
 
         public async Task SearchCars( )
