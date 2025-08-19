@@ -2,23 +2,22 @@
 
 namespace PageObjectModelPW.pages
 {
-    internal class HomePage
+    internal class HomePage : BasePage
     {
-
-        IPage page;
-
-        public HomePage(IPage page)
+        public HomePage(IPage page) : base(page)
         {
-            this.page = page;
+
+
         }
-        public async Task FindNewCars( )
+
+        public async Task<NewCarsPage> FindNewCars( )
         {
-            await page.Locator("//*[@id=\"root\"]/div[2]/header/div/nav/ul/li[1]/div[1]").HoverAsync();
+            await page.Locator("//*[@id=\"root\"]/div[1]/header[1]/div[1]/nav[1]/ul[1]/li[1]/div[1]").HoverAsync();
             await page.Locator("//div[contains(text(),'Find New Cars')]").ClickAsync();
-            //await page.Locator("//img[@title='Maruti Suzuki Cars']").ClickAsync();
-            await page.Locator("a[href='/maruti-suzuki-cars/']").ClickAsync();
+            await page.Locator("//img[@title='Maruti Suzuki Cars']").ClickAsync();
+            //await page.Locator("a[href='/maruti-suzuki-cars/']").ClickAsync();
 
-
+            return new NewCarsPage(page);
         }
 
         public async Task SearchCars( )

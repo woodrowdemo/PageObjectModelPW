@@ -2,14 +2,34 @@
 
 namespace PageObjectModelPW.pages
 {
-    internal class NewCarsPage
+    internal class NewCarsPage : BasePage
     {
-
-        IPage page;
-
-        public NewCarsPage(IPage page)
+        public NewCarsPage(IPage page) : base(page)
         {
-            this.page = page;
+
+
+        }
+
+
+
+        public async Task GoToToyota( )
+        {
+            await page.Locator("//img[@title='Toyota Cars']").ClickAsync();
+        }
+
+        public async Task GoToBMW( )
+        {
+            await page.Locator("//div[normalize-space()='BNW']").ClickAsync();
+        }
+        public async Task GoToHonda( )
+        {
+            await page.Locator("//img[@title='Honda']").ClickAsync();
+
+        }
+        public async Task GoToMG( )
+        {
+            await page.Locator("//img[@title='MG']").ClickAsync();
+
         }
 
     }
