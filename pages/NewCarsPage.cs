@@ -19,7 +19,7 @@ namespace PageObjectModelPW.pages
 
         public async Task GoToBMW( )
         {
-            await page.Locator("//div[normalize-space()='BNW']").ClickAsync();
+            await page.Locator("//div[normalize-space()='BMW']").ClickAsync();
         }
         public async Task GoToHonda( )
         {
