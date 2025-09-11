@@ -18,10 +18,9 @@ namespace PageObjectModelPW.testcases
             await page.GotoAsync("https://www.carwale.com/");
 
             HomePage homePage = new HomePage(page);
-            //await Task.Delay(2000);
+            NewCarsPage newCar = await homePage.FindNewCars();
             await homePage.FindNewCars();
 
-            NewCarsPage newCar = new NewCarsPage(page);
             await Task.Delay(2000);
             await newCar.GoToBMW();
             await Task.Delay(2000);
