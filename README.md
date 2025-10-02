@@ -1,4 +1,4 @@
-Disclaimer: This framework is still under construction. I have decided to make it public so prospective employers can see what I am capable of doing. 
+Disclaimer: This framework is still under construction. I have decided to make it public so prospective employers can see what I am working on. 
 
 ---
 
