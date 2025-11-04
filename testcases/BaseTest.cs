@@ -1,4 +1,5 @@
 ﻿using AventStack.ExtentReports;
+using AventStack.ExtentReports.MarkupUtils;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Config;
 
@@ -6,6 +7,9 @@ using log4net;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
+
+using NUnit.Framework.Interfaces;
+// I stopped on modul 111
 
 namespace PageObjectModelPW.testcases
 {
@@ -51,7 +55,7 @@ namespace PageObjectModelPW.testcases
 
             extent.AddSystemInfo("Executed by:", "Woodrow Winters");
             extent.AddSystemInfo("Organization:", "Woodrows Extent Report Demo");
-            extent.AddSystemInfo("Build No :", "W2A-1234");
+            extent.AddSystemInfo("Build No :", DateTime.Now.ToString("yyyy-MM-dd_HHmmss"));
 
 
             return extent;
@@ -76,16 +80,54 @@ namespace PageObjectModelPW.testcases
             playwright = await Playwright.CreateAsync();
         }
 
-        public static void CaptureScreenshot(IPage page)
+        public static async Task CaptureScreenshot(IPage page)
         {
             DateTime currentTime = DateTime.Now;
             fileName = currentTime.ToString("yyyy-MM-dd_HHmmss") + ".jpg";
+
+            await page.ScreenshotAsync(new PageScreenshotOptions { Path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent + "\\screenshots\\" + fileName });
         }
+
+
+
+
 
         [TearDown]
         public void AfterEachTest( )
         {
 
+            // Get the test result
+            var testStatus = TestContext.CurrentContext.Result.Outcome.Status;
+            string message = TestContext.CurrentContext.Result.Message;
+
+            switch (testStatus)
+            {
+                case TestStatus.Passed:
+                    test.Pass("Test Passed");
+                    IMarkup markup = MarkupHelper.CreateLabel("PASS", ExtentColor.Green);
+                    break;
+                case TestStatus.Skipped:
+                    test.Skip($"Test Skipped: {message}");
+                    markup = MarkupHelper.CreateLabel("SKIPPED", ExtentColor.Yellow);
+                    break;
+                case TestStatus.Failed:
+                    test.Fail($"Test Failed: {message}");
+                    test.Fail("<b><font color='red'>Screenshot of failure</font></b><br>", MediaEntityBuilder.CreateScreenCaptureFromPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent + "\\screenshots\\" + fileName).Build());
+                    markup = MarkupHelper.CreateLabel("FAIL", ExtentColor.Red);
+                    break;
+
+
+            }
+            playwright.Dispose();
         }
     }
 }
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,7 @@
+﻿<locators>
+	<LoginPage>
+		<username>#email</username>
+		<password>//*[@id="pass"]</password>
+		<loginbutton>[type='submit']</loginbutton>
+	</LoginPage>
+</locators>
