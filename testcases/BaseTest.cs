@@ -120,6 +120,30 @@ namespace PageObjectModelPW.testcases
             }
             playwright.Dispose();
         }
+
+        protected async Task<(IBrowser, IPage)> CreateBrowserAndPage(IPlaywright playwrightInstance, string browserType, BrowserTypeLaunchOptions launchOptions = null)
+        {
+            IBrowser browser;
+            if (browserType.Equals("chrome", StringComparison.OrdinalIgnoreCase))
+            {
+
+                browser = await playwrightInstance.Chromium.LaunchAsync(launchOptions);
+            }
+            else if (browserType.Equals("firefox", StringComparison.OrdinalIgnoreCase))
+            {
+                browser = await playwrightInstance.Firefox.LaunchAsync(launchOptions);
+            }
+            else
+            {
+                Assert.Fail("Unsupported browser type: " + browserType);
+                return (null, null); // This line will never be reached due to Assert.Fail
+            }
+
+            IPage page = await browser.NewPageAsync();
+
+            await page.GotoAsync("AppSettings:testsiteurl");
+            return (browser, page);
+        }
     }
 }
 
