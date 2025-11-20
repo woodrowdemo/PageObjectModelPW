@@ -140,7 +140,7 @@ namespace PageObjectModelPW.testcases
             }
 
             IPage page = await browser.NewPageAsync();
-
+            await page.SetViewportSizeAsync(1500, 1000);
             await page.GotoAsync("AppSettings:testsiteurl");
             return (browser, page);
         }
