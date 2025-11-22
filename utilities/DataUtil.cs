@@ -1,9 +1,19 @@
-﻿using OfficeOpenXml;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using OfficeOpenXml;
 
 namespace PageObjectModelPW.utilities
 {
     class DataUtil
     {
+        // Ensure EPPlus is running under a non-commercial personal license
+        static DataUtil()
+        {
+            // Set the non-commercial personal license and author name
+            ExcelPackage.License.SetNonCommercialPersonal("My Name");
+        }
 
 
         public static IEnumerable<TestCaseData> GetTestDataFromExcel(string filePath, string sheetName, List<string> columnNames)
@@ -19,14 +29,14 @@ namespace PageObjectModelPW.utilities
                     throw new ArgumentException($"Sheet '{sheetName}' not found in the Excel file.");
                 }
 
-                // Find column indices for specified column names
-                var columnIndices = new Dictionary<string, int>();
+                // Find column indices for specified column names (trim header values)
+                var columnIndices = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
                 for (int col = 1; col <= worksheet.Dimension.End.Column; col++)
                 {
-                    var cellValue = worksheet.Cells[1, col].Value?.ToString();
-                    if (columnNames.Contains(cellValue))
+                    var header = worksheet.Cells[1, col].Value?.ToString()?.Trim();
+                    if (!string.IsNullOrEmpty(header) && columnNames.Contains(header))
                     {
-                        columnIndices[cellValue] = col;
+                        columnIndices[header] = col;
                     }
                 }
 
@@ -45,8 +55,29 @@ namespace PageObjectModelPW.utilities
                     var data = new List<string>();
                     foreach (var columnName in columnNames)
                     {
-                        data.Add(worksheet.Cells[row, columnIndices[columnName]].Value?.ToString());
+                        var raw = worksheet.Cells[row, columnIndices[columnName]].Value?.ToString();
+                        var value = raw?.Trim();
+
+                        // Normalize runmode to uppercase single character (helps comparisons)
+                        if (string.Equals(columnName, "runmode", StringComparison.OrdinalIgnoreCase))
+                        {
+                            value = value?.ToUpperInvariant();
+                        }
+
+                        data.Add(value);
                     }
+
+                    // If runmode is explicitly 'N', skip adding this testcase so it won't be reported as Ignored
+                    var runmodeValue = data.ElementAtOrDefault(columnNames.FindIndex(n => string.Equals(n, "runmode", StringComparison.OrdinalIgnoreCase)));
+                    if (string.Equals(runmodeValue, "N", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Console.WriteLine($"[DataUtil] Skipping row {row} because runmode='{runmodeValue}'");
+                        continue; // skip this row
+                    }
+
+                    // Diagnostic output: shows exact values to reveal hidden chars if needed
+                    Console.WriteLine($"[DataUtil] Adding Row {row}: {string.Join(" | ", data.Select((v, i) => $"{columnNames[i]}:'{v}'(len:{v?.Length ?? 0})"))}");
+
                     testData.Add(new TestCaseData(data.ToArray()));
                 }
             }

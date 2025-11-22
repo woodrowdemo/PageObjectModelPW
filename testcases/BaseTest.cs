@@ -28,7 +28,7 @@ namespace PageObjectModelPW.testcases
 
 
         [OneTimeSetUp]
-        public void OneTimeSetUp( )
+        public void OneTimeSetUp()
         {
             log.Info("Test Execution Started!!!");
             configuration = new ConfigurationBuilder()
@@ -37,7 +37,7 @@ namespace PageObjectModelPW.testcases
                 .Build();
 
             DateTime currentTime = DateTime.Now;
-            string fileName = "Extent_" + currentTime.ToString("yyyyMMdd_HHmmss") + ".html";
+            fileName = "Extent_" + currentTime.ToString("yyyyMMdd_HHmmss") + ".html";
             extent = CreateInstance(fileName);
 
 
@@ -45,26 +45,38 @@ namespace PageObjectModelPW.testcases
 
         public static ExtentReports CreateInstance(string filename)
         {
+            // Build a full path for the report file inside the solution 'reports' folder
+            var projectRoot = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            var reportsDir = Path.Combine(projectRoot, "reports");
+            if (!Directory.Exists(reportsDir))
+            {
+                Directory.CreateDirectory(reportsDir);
+            }
 
+            var reportPath = Path.Combine(reportsDir, filename);
 
-            var htmlReporter = new ExtentSparkReporter(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName);
+            var htmlReporter = new ExtentSparkReporter(reportPath);
             htmlReporter.Config.Theme = Theme.Standard;
             htmlReporter.Config.DocumentTitle = "Test Artifacts";
             htmlReporter.Config.ReportName = "Test Results";
             htmlReporter.Config.Encoding = "utf-8";
 
-            extent.AddSystemInfo("Executed by:", "Woodrow Winters");
-            extent.AddSystemInfo("Organization:", "Woodrows Extent Report Demo");
-            extent.AddSystemInfo("Build No :", DateTime.Now.ToString("yyyy-MM-dd_HHmmss"));
+            // Create and configure ExtentReports instance (was missing before)
+            var localExtent = new ExtentReports();
+            localExtent.AttachReporter(htmlReporter);
+
+            localExtent.AddSystemInfo("Executed by:", "Woodrow Winters");
+            localExtent.AddSystemInfo("Organization:", "Woodrows Extent Report Demo");
+            localExtent.AddSystemInfo("Build No :", DateTime.Now.ToString("yyyy-MM-dd_HHmmss"));
 
 
-            return extent;
+            return localExtent;
 
 
         }
 
         [OneTimeTearDown]
-        public void OneTimeTearDown( )
+        public void OneTimeTearDown()
         {
             extent.Flush();
             log.Info("Test Execution Completed!!!");
@@ -73,7 +85,7 @@ namespace PageObjectModelPW.testcases
         }
 
         [SetUp]
-        public async void BeforeEachTest( )
+        public async Task BeforeEachTest()
         {
 
             test = extent.CreateTest($"{TestContext.CurrentContext.Test.ClassName} - {TestContext.CurrentContext.Test.Name}");
@@ -93,7 +105,7 @@ namespace PageObjectModelPW.testcases
 
 
         [TearDown]
-        public void AfterEachTest( )
+        public void AfterEachTest()
         {
 
             // Get the test result
@@ -141,11 +153,27 @@ namespace PageObjectModelPW.testcases
 
             IPage page = await browser.NewPageAsync();
             await page.SetViewportSizeAsync(1500, 1000);
-            await page.GotoAsync("AppSettings:testsiteurl");
+
+            // Navigate to configured test site URL (use configuration field)
+            var url = configuration?["Appsettings:testsiteurl"];
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                Assert.Fail("Test site URL is not configured (Appsettings:testsiteurl).");
+            }
+
+            await page.GotoAsync(url);
             return (browser, page);
         }
     }
 }
+
+
+
+
+
+
+
+
 
 
 

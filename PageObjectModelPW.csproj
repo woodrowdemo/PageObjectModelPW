@@ -14,25 +14,25 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="EPPlus" Version="8.1.0" />
+    <PackageReference Include="EPPlus" Version="8.3.0" />
     <PackageReference Include="ExtentReports" Version="5.0.4" />
-    <PackageReference Include="log4net" Version="3.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.8" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageReference Include="Microsoft.Playwright" Version="1.54.0" />
-    <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.54.0" />
-    <PackageReference Include="Microsoft.Playwright.TestAdapter" Version="1.54.0" />
-    <PackageReference Include="MySql.Data" Version="9.4.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="log4net" Version="3.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="Microsoft.Playwright" Version="1.56.0" />
+    <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.56.0" />
+    <PackageReference Include="Microsoft.Playwright.TestAdapter" Version="1.56.0" />
+    <PackageReference Include="MySql.Data" Version="9.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="NUnit" Version="4.4.0" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.10.0">
+    <PackageReference Include="NUnit.Analyzers" Version="4.11.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" />
     <PackageReference Include="OpenCvSharp4" Version="4.11.0.20250507" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.11.0.20250507" />
-    <PackageReference Include="Reqnroll" Version="2.4.1" />
+    <PackageReference Include="Reqnroll" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,7 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="reports\" />
     <Folder Include="resources\" />
+    <Folder Include="screenshots\" />
   </ItemGroup>
 
 </Project>

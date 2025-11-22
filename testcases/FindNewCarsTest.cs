@@ -37,9 +37,19 @@ namespace PageObjectModelPW.testcases
                 if (carbrand.Equals("bmw"))
                 {
                     await newCar.GoToBMW();
+
+                }
+                else if (carbrand.Equals("toytoa"))
+                {
+                    await newCar.GoToToyota();
+                }
+                else if (carbrand.Equals("mg"))
+                {
+                    await newCar.GoToMG();
                 }
             }
-            catch (Exception ex)
+
+            catch (Exception)
             {
                 await CaptureScreenshot(page);
 
