@@ -31,39 +31,50 @@ namespace PageObjectModelPW.testcases
             HomePage homePage = new HomePage(page);
             NewCarsPage newCar = await homePage.FindNewCars();
             await homePage.FindNewCars();
-
-            try
             {
-                if (carbrand.Equals("bmw"))
+
+                var carBrandsActions = new Dictionary<string, Func<Task>>
                 {
-                    await newCar.GoToBMW();
+                    { "bmw", newCar.GoToBMW },
+                    { "honda", newCar.GoToHonda },
+                    { "toyota", newCar.GoToToyota },
+                    { "mg", newCar.GoToMG },
+
+                };
+                try
+                {
+
+
+                    if (carBrandsActions.TryGetValue(carbrand.ToLower(), out var navigateToCar))
+                    {
+
+                        await navigateToCar();
+                    }
+                    else
+                    {
+                        Assert.Fail($"Car brand '{carbrand}' does not exist");
+
+                    }
+
+                    await Task.Delay(2000);
+                }
+
+                catch (Exception)
+                {
+                    await CaptureScreenshot(page);
 
                 }
-                else if (carbrand.Equals("toytoa"))
+                finally
                 {
-                    await newCar.GoToToyota();
+                    await page.CloseAsync();
+                    await browser.CloseAsync();
                 }
-                else if (carbrand.Equals("mg"))
-                {
-                    await newCar.GoToMG();
-                }
+
+
+                await Task.Delay(2000);
+                //await newCar.GoToBMW();
+                await Task.Delay(2000);
             }
-
-            catch (Exception)
-            {
-                await CaptureScreenshot(page);
-
-            }
-            finally
-            {
-                await page.CloseAsync();
-                await browser.CloseAsync();
-            }
-
-
-            await Task.Delay(2000);
-            //await newCar.GoToBMW();
-            await Task.Delay(2000);
         }
         public static IEnumerable<TestCaseData> GetTestData( )
         {
