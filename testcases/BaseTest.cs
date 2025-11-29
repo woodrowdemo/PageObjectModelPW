@@ -28,7 +28,7 @@ namespace PageObjectModelPW.testcases
 
 
         [OneTimeSetUp]
-        public void OneTimeSetUp()
+        public void OneTimeSetUp( )
         {
             log.Info("Test Execution Started!!!");
             configuration = new ConfigurationBuilder()
@@ -65,9 +65,9 @@ namespace PageObjectModelPW.testcases
             var localExtent = new ExtentReports();
             localExtent.AttachReporter(htmlReporter);
 
-            localExtent.AddSystemInfo("Executed by:", "Woodrow Winters");
+            localExtent.AddSystemInfo("Executed by:", "Automation Team");
             localExtent.AddSystemInfo("Organization:", "Woodrows Extent Report Demo");
-            localExtent.AddSystemInfo("Build No :", DateTime.Now.ToString("yyyy-MM-dd_HHmmss"));
+            localExtent.AddSystemInfo("Build No :", DateTime.Now.ToString("MM-dd-yyyy_HHmmss"));
 
 
             return localExtent;
@@ -76,7 +76,7 @@ namespace PageObjectModelPW.testcases
         }
 
         [OneTimeTearDown]
-        public void OneTimeTearDown()
+        public void OneTimeTearDown( )
         {
             extent.Flush();
             log.Info("Test Execution Completed!!!");
@@ -85,7 +85,7 @@ namespace PageObjectModelPW.testcases
         }
 
         [SetUp]
-        public async Task BeforeEachTest()
+        public async Task BeforeEachTest( )
         {
 
             test = extent.CreateTest($"{TestContext.CurrentContext.Test.ClassName} - {TestContext.CurrentContext.Test.Name}");
@@ -105,7 +105,7 @@ namespace PageObjectModelPW.testcases
 
 
         [TearDown]
-        public void AfterEachTest()
+        public void AfterEachTest( )
         {
 
             // Get the test result
