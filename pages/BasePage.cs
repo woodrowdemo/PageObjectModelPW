@@ -13,6 +13,7 @@ namespace PageObjectModelPW.pages
         /// This is used by derived classes to interact with web elements.
         /// </summary>
         public IPage page;
+        public static CarBase carBase;
 
         /// <summary>
         /// Initializes a new instance of the BasePage class.
@@ -21,6 +22,7 @@ namespace PageObjectModelPW.pages
         public BasePage(IPage page)
         {
             this.page = page;
+            carBase = new CarBase(page);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace PageObjectModelPW.testcases
 
         [Parallelizable(ParallelScope.Self)]
         [Test, TestCaseSource(nameof(GetTestData))]
-        public async Task FindCarTest(string carbrand, string browserType, string runmode)
+        public async Task FindCarTest(string carbrand, string browserType, string runmode, string carTitle)
         {
 
             if (runmode.Equals("N"))
@@ -49,6 +49,9 @@ namespace PageObjectModelPW.testcases
                     {
 
                         await navigateToCar();
+                        Console.WriteLine("Car title is : " + await BasePage.carBase.GetCarTitle());
+
+                        Assert.That(carTitle.Equals(await BasePage.carBase.GetCarTitle()), "Car titles not matching " + carTitle);
                     }
                     else
                     {
@@ -78,7 +81,7 @@ namespace PageObjectModelPW.testcases
         }
         public static IEnumerable<TestCaseData> GetTestData( )
         {
-            var columns = new List<string> { "carbrand", "browserType", "runmode" };
+            var columns = new List<string> { "carbrand", "browserType", "runmode", "carTitle" };
 
             return DataUtil.GetTestDataFromExcel(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\resources\\TestSpreadSheet.xlsx", "FindCarTest", columns);
         }

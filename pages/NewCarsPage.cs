@@ -32,7 +32,7 @@ namespace PageObjectModelPW.pages
         }
         public async Task<MGCarsPage> GoToMG( )
         {
-            await page.Locator("//img[@title='Maruti Suzuki Cars']").ClickAsync();
+            await page.Locator("//img[@title='Maruti Suzuki']").ClickAsync();
             return new MGCarsPage(page);
         }
 
