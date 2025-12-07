@@ -16,7 +16,6 @@ namespace PageObjectModelPW.pages
         {
             await page.Locator("//img[@title='Toyota Cars']").ClickAsync();
 
-
             return new ToyotaCarsPage(page);
         }
 

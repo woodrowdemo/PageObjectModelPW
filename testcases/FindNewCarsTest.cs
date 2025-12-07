@@ -26,7 +26,6 @@ namespace PageObjectModelPW.testcases
             using var playwrightInstance = await Playwright.CreateAsync();
 
             var (browser, page) = await CreateBrowserAndPage(playwrightInstance, browserType, new BrowserTypeLaunchOptions { Headless = false });
-            //await page.GotoAsync("https://www.carwale.com/");
 
             HomePage homePage = new HomePage(page);
             NewCarsPage newCar = await homePage.FindNewCars();
@@ -75,7 +74,6 @@ namespace PageObjectModelPW.testcases
 
 
                 await Task.Delay(2000);
-                //await newCar.GoToBMW();
                 await Task.Delay(2000);
             }
         }

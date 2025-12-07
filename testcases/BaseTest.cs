@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 
 using NUnit.Framework.Interfaces;
-// I stopped on modul 111
 
 namespace PageObjectModelPW.testcases
 {
