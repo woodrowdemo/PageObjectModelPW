@@ -17,13 +17,13 @@ namespace PageObjectModelPW.testcases
         // Playwright, Extent Reports, Logs, Configuration, fix, capture shots etc.
 
         protected IPlaywright playwright;
-        private static ExtentReports extent;
+        public static ExtentReports extent;
         public static ExtentTest test;
 
         private static readonly ILog log = LogManager.GetLogger(typeof(BaseTest));
 
         IConfiguration configuration;
-        private static string fileName;
+        public static string fileName;
 
 
         [OneTimeSetUp]
