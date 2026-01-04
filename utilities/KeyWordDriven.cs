@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 
+using PageObjectModelPW.testcases;
 using PageObjectModelPW.utilities;
 
 namespace PageObjectModelPW.TestCases
@@ -9,20 +10,26 @@ namespace PageObjectModelPW.TestCases
     {
 
         static IBrowser browser;
-        static IPage page;
+        private static IPage page;
 
-
+        //public KeyWordDriven(IPage pageInstance) { page = pageInstance; }
 
         public static async Task Type(string pageName, string locatorName, string value)
         {
+            BaseTest.test.Info("Getting text from the element : " + locatorName + "entered the value as : " + value);
             await page.Locator(XMLLocatorReader.GetLocatorValue(pageName, locatorName)).FillAsync(value);
-
         }
 
         public static async Task Click(string pageName, string locatorName)
         {
+            BaseTest.test.Info("Click on an element : " + locatorName);
             await page.Locator(XMLLocatorReader.GetLocatorValue(pageName, locatorName)).ClickAsync();
+        }
 
+        public static async Task MouseOver(string pageName, string locatorName)
+        {
+            BaseTest.test.Info("Click on an element : " + locatorName);
+            await page.HoverAsync(XMLLocatorReader.GetLocatorValue(pageName, locatorName));
         }
 
         static async Task Main(string[] args)
@@ -31,8 +38,6 @@ namespace PageObjectModelPW.TestCases
                 .SetBasePath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\resources\\")
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
-
-            // var playwright = await Playwright.CreateAsync();
 
             var testSiteUrl = configuration["Appsettings:testsiteurl"];
             if (string.IsNullOrEmpty(testSiteUrl))
