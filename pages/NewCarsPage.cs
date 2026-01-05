@@ -14,24 +14,28 @@ namespace PageObjectModelPW.pages
 
         public async Task<ToyotaCarsPage> GoToToyota( )
         {
-            await page.Locator("//img[@title='Toyota Cars']").ClickAsync();
+            await keyword.Click("NewCarsPage", "toyota");
+            //await page.Locator("//img[@title='Toyota Cars']").ClickAsync();
 
             return new ToyotaCarsPage(page);
         }
 
         public async Task<BMWCarsPage> GoToBMW( )
         {
-            await page.Locator("//div[normalize-space()='BMW']").ClickAsync();
+            await keyword.Click("NewCarsPage", "bmwcar");
+            //await page.Locator("//div[normalize-space()='BMW']").ClickAsync();
             return new BMWCarsPage(page);
         }
         public async Task<HondasCarsPage> GoToHonda( )
         {
-            await page.Locator("//img[@title='Honda']").ClickAsync();
+            await keyword.Click("NewCarsPage", "hondacar");
+            //await page.Locator("//img[@title='Honda']").ClickAsync();
             return new HondasCarsPage(page);
         }
         public async Task<MGCarsPage> GoToMG( )
         {
-            await page.Locator("//img[@title='Maruti Suzuki']").ClickAsync();
+            await keyword.Click("NewCarsPage", "mgcar");
+            //await page.Locator("//img[@title='Maruti Suzuki']").ClickAsync();
             return new MGCarsPage(page);
         }
 

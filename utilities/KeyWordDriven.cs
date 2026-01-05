@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Playwright;
+﻿using Microsoft.Playwright;
 
 using PageObjectModelPW.testcases;
 using PageObjectModelPW.utilities;
@@ -31,6 +30,11 @@ namespace PageObjectModelPW.TestCases
         {
             BaseTest.test.Info("Hovering over element : " + locatorName);
             await _page.HoverAsync(XMLLocatorReader.GetLocatorValue(pageName, locatorName));
+        }
+
+        internal async Task<string> GetText(string v1, string v2)
+        {
+            throw new NotImplementedException();
         }
     }
 }

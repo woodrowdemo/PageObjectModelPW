@@ -14,8 +14,8 @@ namespace PageObjectModelPW.pages
 
         public async Task<NewCarsPage> FindNewCars( )
         {
-            //await page.Locator("//*[@id=\"root\"]/div[1]/header[1]/div[1]/nav[1]/ul[1]/li[1]/div[1]").HoverAsync();
-            //await page.Locator("//div[contains(text(),'Find New Cars')]").ClickAsync();
+
+
             var keyWordDriven = new keyWordDriven(page);
             await keyWordDriven.MouseOver("HomePage", "newcars");
             await keyWordDriven.Click("HomePage", "findnewcars");

@@ -14,5 +14,18 @@
 		<newcars>//*[@id="root"]/div[1]/header/div/nav/ul/li[1]</newcars>
 		<findnewcars>//div[contains(text(),'Find New Cars')]</findnewcars>
 	</HomePage>
+
+	<NewCarsPage>
+		<toyota>//img[@title='Toyota Cars']</toyota>
+		<bmwcar>//div[normalize-space()='BMW']</bmwcar>
+		<hondacar>//img[@title='Honda']</hondacar>
+		<mgcar>//img[@title='Maruti Suzuki']</mgcar>
+	</NewCarsPage>
+
+	<CarBase>
+		<cartitle>//header/h1</cartitle>
+		
+	</CarBase>
+	
 </locators>
 

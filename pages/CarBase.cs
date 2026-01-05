@@ -10,7 +10,8 @@ namespace PageObjectModelPW.pages
 
         public async Task<string> GetCarTitle( )
         {
-            return await page.Locator("//header/h1").InnerTextAsync();
+            return await BasePage.keyword.GetText("CarBase", "cartitle");
+            //return await page.Locator("//header/h1").InnerTextAsync();
         }
     }
 }
