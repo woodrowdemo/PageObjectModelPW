@@ -1,4 +1,5 @@
 ﻿<locators>
+	
 	<LoginPage>
 		<username>#email</username>
 		<password>//*[@id="pass"]</password>
