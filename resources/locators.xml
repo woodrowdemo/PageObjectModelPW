@@ -4,4 +4,15 @@
 		<password>//*[@id="pass"]</password>
 		<loginbutton>[type='submit']</loginbutton>
 	</LoginPage>
+	
+	<RegistrationPage>
+		<username>#username</username>
+		<password>//*[@id='pass']</password>
+	</RegistrationPage>
+
+	<HomePage>
+		<newcars>//*[@id="root"]/div[1]/header/div/nav/ul/li[1]</newcars>
+		<findnewcars>//div[contains(text(),'Find New Cars')]</findnewcars>
+	</HomePage>
 </locators>
+

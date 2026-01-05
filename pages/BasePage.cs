@@ -1,5 +1,7 @@
 ﻿using Microsoft.Playwright;
 
+using PageObjectModelPW.TestCases;
+
 namespace PageObjectModelPW.pages
 {
     /// <summary>
@@ -14,6 +16,7 @@ namespace PageObjectModelPW.pages
         /// </summary>
         public IPage page;
         public static CarBase carBase;
+        public static keyWordDriven keyword;
 
         /// <summary>
         /// Initializes a new instance of the BasePage class.
@@ -23,6 +26,7 @@ namespace PageObjectModelPW.pages
         {
             this.page = page;
             carBase = new CarBase(page);
+            keyword = new keyWordDriven(page);
         }
     }
 }
