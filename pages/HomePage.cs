@@ -21,6 +21,7 @@ namespace PageObjectModelPW.pages
             await keyWordDriven.Click("HomePage", "findnewcars");
             await page.Locator("//img[@title='Maruti Suzuki Cars']").ClickAsync();
 
+
             //await page.Locator("a[href='/maruti-suzuki-cars/']").ClickAsync();
 
             return new NewCarsPage(page);
