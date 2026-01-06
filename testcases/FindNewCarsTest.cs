@@ -29,7 +29,6 @@ namespace PageObjectModelPW.testcases
 
             HomePage homePage = new HomePage(page);
             NewCarsPage newCar = await homePage.FindNewCars();
-            await homePage.FindNewCars();
             {
 
                 var carBrandsActions = new Dictionary<string, Func<Task>>
