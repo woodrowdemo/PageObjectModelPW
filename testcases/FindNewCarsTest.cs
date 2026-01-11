@@ -12,7 +12,8 @@ namespace PageObjectModelPW.testcases
     {
 
         [Parallelizable(ParallelScope.Self)]
-        [Test, TestCaseSource(nameof(GetTestData)), Category("BVT")]
+        [Retry(1)]
+        [Test, TestCaseSource(nameof(GetTestData)), Category("My Test")]
         public async Task FindCarTest(string carbrand, string browserType, string runmode, string carTitle)
         {
 

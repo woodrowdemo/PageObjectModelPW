@@ -12,7 +12,7 @@
 	</RegistrationPage>
 
 	<HomePage>
-		<newcars>//*[@id="root"]/div[1]/header/div/nav/ul/li[1]</newcars>
+		<newcars>//*[@id="root"]/div[1]/header/div/nav/ul/li[1]/div</newcars>
 		<findnewcars>//div[contains(text(),'Find New Cars')]</findnewcars>
 	</HomePage>
 

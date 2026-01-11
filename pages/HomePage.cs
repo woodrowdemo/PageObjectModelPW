@@ -17,7 +17,7 @@ namespace PageObjectModelPW.pages
 
 
             var keyWordDriven = new keyWordDriven(page);
-            await keyWordDriven.MouseOver("HomePage", "newcars");
+            await keyWordDriven.Click("HomePage", "newcars");
             await keyWordDriven.Click("HomePage", "findnewcars");
             await page.Locator("//img[@title='Maruti Suzuki Cars']").ClickAsync();
 
