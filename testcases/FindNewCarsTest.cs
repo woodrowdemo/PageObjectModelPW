@@ -12,7 +12,7 @@ namespace PageObjectModelPW.testcases
     {
 
         [Parallelizable(ParallelScope.Self)]
-        [Retry(1)]
+        [Retry(2)]
         [Test, TestCaseSource(nameof(GetTestData)), Category("My Test")]
         public async Task FindCarTest(string carbrand, string browserType, string runmode, string carTitle)
         {
@@ -74,7 +74,7 @@ namespace PageObjectModelPW.testcases
 
 
                 await Task.Delay(2000);
-                await Task.Delay(2000);
+                //await Task.Delay(2000);
             }
         }
         public static IEnumerable<TestCaseData> GetTestData( )

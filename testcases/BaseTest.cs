@@ -1,4 +1,6 @@
-﻿using AventStack.ExtentReports;
+﻿using System.Collections.Concurrent;
+
+using AventStack.ExtentReports;
 using AventStack.ExtentReports.MarkupUtils;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Config;
@@ -25,6 +27,8 @@ namespace PageObjectModelPW.testcases
         IConfiguration configuration;
         public static string fileName;
 
+        // Track attempt counts per test so screenshots and logs can include attempt number
+        private static readonly ConcurrentDictionary<string, int> _attemptCounts = new();
 
         [OneTimeSetUp]
         public void OneTimeSetUp( )
@@ -86,15 +90,27 @@ namespace PageObjectModelPW.testcases
         [SetUp]
         public async Task BeforeEachTest( )
         {
+            // Track and increment attempt count for this test
+            var fullName = TestContext.CurrentContext.Test.FullName ?? TestContext.CurrentContext.Test.Name;
+            var attempt = _attemptCounts.AddOrUpdate(fullName, 1, (_, v) => v + 1);
 
             test = extent.CreateTest($"{TestContext.CurrentContext.Test.ClassName} - {TestContext.CurrentContext.Test.Name}");
+            test.Info($"Attempt #{attempt}");
+            Console.WriteLine($"[TestAttempt] {fullName} attempt #{attempt}");
+
             playwright = await Playwright.CreateAsync();
         }
 
         public static async Task CaptureScreenshot(IPage page)
         {
             DateTime currentTime = DateTime.Now;
-            fileName = currentTime.ToString("yyyy-MM-dd_HHmmss") + ".jpg";
+
+            // Determine attempt number for current test (if available)
+            var fullName = TestContext.CurrentContext.Test.FullName ?? TestContext.CurrentContext.Test.Name;
+            _attemptCounts.TryGetValue(fullName, out var attempt);
+
+            // include attempt in file name to differentiate retries
+            fileName = currentTime.ToString("yyyy-MM-dd_HHmmss") + $"_attempt{attempt}.jpg";
 
             await page.ScreenshotAsync(new PageScreenshotOptions { Path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent + "\\screenshots\\" + fileName });
         }

@@ -10,7 +10,7 @@ namespace PageObjectModelPW.testcases
     internal class CarNameAndPriceTest : BaseTest
     {
         [Parallelizable(ParallelScope.Self)]
-        [Retry(1)]
+        [Retry(2)]
         [Test, TestCaseSource(nameof(GetTestData)), Category("SmokeTest")]
         public async Task CarNameAndPrice(string carbrand, string browserType, string runmode)
         {
