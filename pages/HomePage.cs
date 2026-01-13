@@ -22,7 +22,6 @@ namespace PageObjectModelPW.pages
             await page.Locator("//img[@title='Maruti Suzuki Cars']").ClickAsync();
 
 
-            //await page.Locator("a[href='/maruti-suzuki-cars/']").ClickAsync();
 
             return new NewCarsPage(page);
         }

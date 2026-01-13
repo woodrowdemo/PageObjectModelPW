@@ -74,7 +74,6 @@ namespace PageObjectModelPW.testcases
 
 
                 await Task.Delay(2000);
-                //await Task.Delay(2000);
             }
         }
         public static IEnumerable<TestCaseData> GetTestData( )
