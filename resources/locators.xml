@@ -12,8 +12,8 @@
 	</RegistrationPage>
 
 	<HomePage>
-		<newcars>//*[@id="root"]/div[1]/header/div/nav/ul/li[1]/div</newcars>
-		<findnewcars>//div[contains(text(),'Find New Cars')]</findnewcars>
+		<newcars>//div[normalize-space(text())='NEW CARS']</newcars>
+		<findnewcars>//div[normalize-space(text())='Find New Cars']</findnewcars>
 	</HomePage>
 
 	<NewCarsPage>
@@ -25,8 +25,15 @@
 
 	<CarBase>
 		<cartitle>//header/h1</cartitle>
-		
 	</CarBase>
+
+	<LittleCeasarHomePage>
+		
+	</LittleCeasarHomePage>
+
+	<LittleCeasarLogInPage>
+		
+	</LittleCeasarLogInPage>
 	
 </locators>
 
