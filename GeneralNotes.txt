@@ -3,3 +3,5 @@ java "-Dhudson.model.DirectoryBrowserSupport.csp=" -jar jenkins.war
 
 Go to manage Jenkins -> Script Console and run the following command to disable Content Security Policy (CSP):
 System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+
+Control + C to stop the Jenkins server running in the terminal.
