@@ -5,3 +5,5 @@ Go to manage Jenkins -> Script Console and run the following command to disable 
 System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
 
 Control + C to stop the Jenkins server running in the terminal.
+
+The local Jenkins server will be accessible at http://localhost:8080
