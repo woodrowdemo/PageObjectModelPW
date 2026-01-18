@@ -3,6 +3,13 @@
 using PageObjectModelPW.testcases;
 using PageObjectModelPW.utilities;
 
+/*
+ KeyWordDriven — Provides keyword-style wrapper methods around Playwright's IPage:
+ - Actions: Type, Click, MouseOver, GetText, IsVisible, SelectDropdownByValue, WaitForElement, UploadFile, Clear
+ - Resolves locators via `XMLLocatorReader.GetLocatorValue(pageName, locatorName)`
+ - Logs actions to `BaseTest.test` for reporting
+*/
+
 namespace PageObjectModelPW.TestCases
 {
     public class keyWordDriven

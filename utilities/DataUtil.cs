@@ -1,5 +1,11 @@
 ﻿using OfficeOpenXml;
 
+/* 
+ DataUtil — Reads an Excel worksheet and returns NUnit TestCaseData.
+ Uses EPPlus to map headers to requested columns, produces a TestCaseData per row,
+ and marks rows with runmode 'N' as ignored.
+*/
+
 namespace PageObjectModelPW.utilities
 {
     class DataUtil

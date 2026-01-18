@@ -1,4 +1,9 @@
-﻿using System.Xml;
+﻿/* 
+ XMLLocatorReader — Reads locator values from `resources\locators.xml`.
+ - GetLocatorValue(pageName, elementName) loads the XML and returns the inner text
+   of `/locators/{pageName}/{elementName}` or null if not found.
+*/
+using System.Xml;
 
 namespace PageObjectModelPW.utilities
 {

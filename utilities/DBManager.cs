@@ -1,5 +1,12 @@
 ﻿using MySql.Data.MySqlClient;
 
+/* 
+ DBManager — Simple MySQL helper.
+ - Manages a shared `MySqlConnection` and opens it with `SetMySQLDBConnection()`.
+ - Executes SELECT queries with `GetQuery(query)` and returns results as a List<string>.
+ - Writes error/info messages to the console.
+*/
+
 namespace PageObjectModelPW.utilities
 {
     class DBManager

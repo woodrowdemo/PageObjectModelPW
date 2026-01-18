@@ -1,4 +1,10 @@
-﻿using System.Net;
+﻿/* 
+ MailSender — Simple SMTP email helper.
+ - SendEmail(fromEmail, password, toEmails, subject, body, attachmentPath)
+ - Uses smtp.gmail.com:587 with SSL and basic NetworkCredential authentication.
+ - Attaches a file if provided and logs status/errors to the console.
+*/
+using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 
@@ -9,6 +15,7 @@ namespace PageObjectModelPW.utilities
 
         public static void SendEmail(string fromEmail, string password, List<string> toEmails, string subject, string body, string attachmentPath)
         {
+
 
 
             // Mail message
