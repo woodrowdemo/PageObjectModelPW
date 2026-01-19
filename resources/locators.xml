@@ -31,6 +31,8 @@
 		<username></username>
 		<password></password>
 		<loginbutton></loginbutton>
+		<invalidpasswordmessage></invalidpasswordmessage>
+		
 	</SauceDemoLoginPage>
 
 	
