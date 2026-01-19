@@ -27,13 +27,13 @@
 		<cartitle>//header/h1</cartitle>
 	</CarBase>
 
-	<LittleCeasarHomePage>
-		
-	</LittleCeasarHomePage>
+	<SauceDemoLoginPage>
+		<username></username>
+		<password></password>
+		<loginbutton></loginbutton>
+	</SauceDemoLoginPage>
 
-	<LittleCeasarLogInPage>
-		
-	</LittleCeasarLogInPage>
+	
 	
 </locators>
 
