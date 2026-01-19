@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Reqenroll\" />
     <Folder Include="reports\" />
     <Folder Include="resources\" />
     <Folder Include="screenshots\" />
