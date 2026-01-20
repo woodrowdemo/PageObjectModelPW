@@ -31,6 +31,11 @@
 		<username>//*[@id="user-name"]</username>
 		<password>//*[@id="password"]</password>
 		<loginbutton>//*[@id="login-button"]</loginbutton>
+		<username></username>
+		<password></password>
+		<loginbutton></loginbutton>
+		<invalidpasswordmessage></invalidpasswordmessage>
+		
 	</SauceDemoLoginPage>
 
 	

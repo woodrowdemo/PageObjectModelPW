@@ -2,7 +2,7 @@
 
 # PageObjectModelPW
 
-This is a sample Page Object Model (POM) project using [Playwright](https://playwright.dev/dotnet/) with C#. It demonstrates how to structure automated browser tests for web applications using the POM design pattern, which enhances test maintenance and code reusability.
+This is a Page Object Model (POM) project using [Playwright](https://playwright.dev/dotnet/) with C#. It demonstrates how to structure automated browser tests for web applications using the POM design pattern, which enhances test maintenance and code reusability.
 
 ## Table of Contents
 
