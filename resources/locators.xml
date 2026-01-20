@@ -28,9 +28,9 @@
 	</CarBase>
 
 	<SauceDemoLoginPage>
-		<username></username>
-		<password></password>
-		<loginbutton></loginbutton>
+		<username>//*[@id="user-name"]</username>
+		<password>//*[@id="password"]</password>
+		<loginbutton>//*[@id="login-button"]</loginbutton>
 	</SauceDemoLoginPage>
 
 	
