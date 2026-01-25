@@ -12,7 +12,9 @@
 	</RegistrationPage>
 
 	<HomePage>
-		<newcars>//div[normalize-space(text())='NEW CARS']</newcars>
+		<newcars>
+			//nav/ul/li[1]/div
+		</newcars>
 		<findnewcars>//div[normalize-space(text())='Find New Cars']</findnewcars>
 	</HomePage>
 
