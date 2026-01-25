@@ -42,11 +42,19 @@ jobs:
 
       - name: Verify resources directory
         run: |
-          if [ ! -d "bin/Release/net8.0/resources" ]; then
-            echo "ERROR: resources directory not found in build output"
+          # Find the build output directory dynamically
+          OUTPUT_DIR=$(find bin/Release -type d -name "net*" | head -n 1)
+          if [ -z "$OUTPUT_DIR" ]; then
+            echo "ERROR: Could not find build output directory"
             exit 1
           fi
-          if [ ! -f "bin/Release/net8.0/resources/appsettings.json" ]; then
+          echo "Found output directory: $OUTPUT_DIR"
+          
+          if [ ! -d "$OUTPUT_DIR/resources" ]; then
+            echo "ERROR: resources directory not found in build output at $OUTPUT_DIR/resources"
+            exit 1
+          fi
+          if [ ! -f "$OUTPUT_DIR/resources/appsettings.json" ]; then
             echo "ERROR: appsettings.json not found in resources directory"
             exit 1
           fi
