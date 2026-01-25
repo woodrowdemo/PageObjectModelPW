@@ -43,12 +43,17 @@
   <ItemGroup>
     <Folder Include="Reqenroll\" />
     <Folder Include="reports\" />
-    <Folder Include="resources\" />
     <Folder Include="screenshots\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include=".github\workflows\ci.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="resources\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
