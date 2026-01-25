@@ -47,4 +47,8 @@
     <Folder Include="screenshots\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".github\workflows\ci.yml" />
+  </ItemGroup>
+
 </Project>
