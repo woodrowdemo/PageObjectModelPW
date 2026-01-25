@@ -63,6 +63,10 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Install Playwright dependencies
+        run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+
+
       - name: Run tests
         run: dotnet test --no-build --configuration Release --logger "trx;LogFileName=test_results.trx"
 
