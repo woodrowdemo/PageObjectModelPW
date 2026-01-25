@@ -1,4 +1,6 @@
 ﻿using Microsoft.Playwright;
+using System.IO;
+using System;
 
 using PageObjectModelPW.pages;
 using PageObjectModelPW.utilities;
@@ -71,7 +73,19 @@ namespace PageObjectModelPW.testcases
         {
             var columns = new List<string> { "carbrand", "browserType", "runmode" };
 
-            return DataUtil.GetTestDataFromExcel(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\resources\\TestSpreadSheet.xlsx", "CarNameAndPrice", columns);
+            // Prefer resources copied to output (AppContext.BaseDirectory), fallback to project-root path
+            var spreadsheetPath = Path.Combine(AppContext.BaseDirectory, "resources", "TestSpreadSheet.xlsx");
+            if (!File.Exists(spreadsheetPath))
+            {
+                spreadsheetPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "resources", "TestSpreadSheet.xlsx");
+            }
+
+            if (!File.Exists(spreadsheetPath))
+            {
+                throw new FileNotFoundException($"Test spreadsheet not found. Checked path: {spreadsheetPath}");
+            }
+
+            return DataUtil.GetTestDataFromExcel(spreadsheetPath, "CarNameAndPrice", columns);
         }
 
     }
