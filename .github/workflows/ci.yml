@@ -58,7 +58,11 @@ jobs:
             echo "ERROR: appsettings.json not found in resources directory"
             exit 1
           fi
-          echo "Resources directory and appsettings.json verified successfully"
+          if [ ! -f "$OUTPUT_DIR/resources/TestSpreadSheet.xlsx" ]; then
+            echo "ERROR: TestSpreadSheet.xlsx not found in resources directory"
+            exit 1
+          fi
+          echo "Resources directory verified successfully (appsettings.json and TestSpreadSheet.xlsx found)"
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
