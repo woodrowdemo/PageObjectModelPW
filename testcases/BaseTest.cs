@@ -34,8 +34,14 @@ namespace PageObjectModelPW.testcases
         public void OneTimeSetUp( )
         {
             log.Info("Test Execution Started!!!");
+            var resourcePath = Path.Combine(AppContext.BaseDirectory, "resources");
+            if (!Directory.Exists(resourcePath))
+            {
+                throw new DirectoryNotFoundException($"The resources directory was not found at path: {resourcePath}");
+            }
+
             configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\resources\\")
+                .SetBasePath(resourcePath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
