@@ -80,7 +80,10 @@ namespace PageObjectModelPW.testcases
         {
             var columns = new List<string> { "carbrand", "browserType", "runmode", "carTitle" };
 
-            return DataUtil.GetTestDataFromExcel(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\resources\\TestSpreadSheet.xlsx", "FindCarTest", columns);
+            var path = Path.Combine(AppContext.BaseDirectory, "resources", "TestSpreadSheet.xlsx");
+            if (!File.Exists(path)) throw new FileNotFoundException("Spreadsheet not found at: " + path);
+
+            return DataUtil.GetTestDataFromExcel(path, "FindCarTest", columns);
         }
 
     }
