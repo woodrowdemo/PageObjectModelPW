@@ -40,6 +40,18 @@ jobs:
       - name: Build
         run: dotnet build --no-restore --configuration Release
 
+      - name: Verify resources directory
+        run: |
+          if [ ! -d "bin/Release/net8.0/resources" ]; then
+            echo "ERROR: resources directory not found in build output"
+            exit 1
+          fi
+          if [ ! -f "bin/Release/net8.0/resources/appsettings.json" ]; then
+            echo "ERROR: appsettings.json not found in resources directory"
+            exit 1
+          fi
+          echo "Resources directory and appsettings.json verified successfully"
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
