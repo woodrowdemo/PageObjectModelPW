@@ -44,7 +44,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Install Playwright dependencies
-        run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+        run: pwsh -c "Get-ChildItem -Path **/bin/*/net8.0/playwright.ps1 -File -Recurse | Select-Object -First 1 | ForEach-Object { & $_.FullName install --with-deps }"
 
 
       - name: Run tests
