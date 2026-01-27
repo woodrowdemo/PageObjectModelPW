@@ -68,7 +68,21 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Install Playwright dependencies
-        run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+        run: |
+          # Try to find built playwright.ps1 anywhere under bin/*/net8.0 and run it with pwsh
+          script=$(find . -type f -path "*/bin/*/net8.0/playwright.ps1" | head -n1 || true)
+          if [ -n "$script" ]; then
+            echo "Found playwright script at: $script"
+            pwsh "$script" install --with-deps
+          else
+            echo "playwright.ps1 not found via find; trying common Release path"
+            if [ -f "./bin/Release/net8.0/playwright.ps1" ]; then
+              pwsh ./bin/Release/net8.0/playwright.ps1 install --with-deps
+            else
+              echo "playwright.ps1 not found in Release path either — falling back to npx playwright install"
+              npx playwright install --with-deps
+            fi
+          fi
 
 
       - name: Run tests
