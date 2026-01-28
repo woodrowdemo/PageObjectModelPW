@@ -3,12 +3,39 @@
  - GetLocatorValue(pageName, elementName) loads the XML and returns the inner text
    of `/locators/{pageName}/{elementName}` or null if not found.
 */
+using System;
+using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace PageObjectModelPW.utilities
 {
     internal class XMLLocatorReader
     {
+        // Try to locate resources/locators.xml by searching upward from the base directory
+        public static string GetXmlPath()
+        {
+            var found = FindFileUpwards(Path.Combine("resources", "locators.xml"));
+            return found ?? Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "resources", "locators.xml");
+        }
+
+        private static string FindFileUpwards(string relativePath)
+        {
+            try
+            {
+                var dir = AppContext.BaseDirectory;
+                var current = new DirectoryInfo(dir);
+                while (current != null)
+                {
+                    var candidate = Path.Combine(current.FullName, relativePath);
+                    if (File.Exists(candidate)) return candidate;
+                    current = current.Parent;
+                }
+            }
+            catch { }
+            return null;
+        }
+
         public static string GetLocatorValue(string pageName, string elementName)
         {
             // Return the first available locator value (keeps backward compatibility)
@@ -18,12 +45,20 @@ namespace PageObjectModelPW.utilities
 
         public static List<string> GetLocatorValues(string pageName, string elementName)
         {
-            var result = new List<string>();
-
             // Load the XML File
-            var xmlPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "resources", "locators.xml");
+            var xmlPath = GetXmlPath();
+            var result = new List<string>();
+            if (string.IsNullOrEmpty(xmlPath) || !File.Exists(xmlPath)) return result;
+
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlPath);
+            try
+            {
+                xmlDoc.Load(xmlPath);
+            }
+            catch
+            {
+                return result;
+            }
 
             // Get the root element
             XmlElement root = xmlDoc.DocumentElement;

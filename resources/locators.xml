@@ -15,7 +15,10 @@
 		<newcars>
 			//nav/ul/li[1]/div
 		</newcars>
-		<findnewcars>//div[normalize-space(text())='Find New Cars']</findnewcars>
+		<findnewcars>
+			<locator>//div[normalize-space(text())='Find New Cars']</locator>
+			<locator>text=Find New Cars</locator>
+		</findnewcars>
 	</HomePage>
 
 	<NewCarsPage>
