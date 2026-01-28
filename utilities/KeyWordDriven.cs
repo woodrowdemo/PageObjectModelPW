@@ -27,25 +27,38 @@ namespace PageObjectModelPW.TestCases
             var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
             if (locator == null)
             {
-                // Try RepairAgent with the pageName and locatorName as fallback hint
-                var alt = await RepairAgent.FindAlternativeAsync(_page, pageName, locatorName);
-                if (!string.IsNullOrEmpty(alt)) locator = _page.Locator(alt);
+                // include diagnostic info in exception
+                List<string> candidates = null;
+                string xmlPath = null;
+                try
+                {
+                    xmlPath = utilities.XMLLocatorReader.GetXmlPath();
+                    candidates = utilities.XMLLocatorReader.GetLocatorValues(pageName, locatorName);
+                }
+                catch { }
+                var candText = candidates == null || candidates.Count == 0 ? "<none>" : string.Join(" | ", candidates);
+                throw new Exception($"Unable to resolve locator for {pageName}.{locatorName}. XML: {xmlPath ?? "<unknown>"}. Candidates: {candText}");
             }
-
-            if (locator == null) throw new Exception($"Unable to resolve locator for {pageName}.{locatorName}");
             await locator.FillAsync(value);
         }
 
         public async Task Click(string pageName, string locatorName)
         {
             BaseTest.test.Info("Clicking on an element : " + locatorName);
-            var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
-            if (locator == null)
+            // diagnostic: log candidate selectors
+            try
             {
-                var alt = await RepairAgent.FindAlternativeAsync(_page, pageName, locatorName);
-                if (!string.IsNullOrEmpty(alt)) locator = _page.Locator(alt);
+                var xmlPath = utilities.XMLLocatorReader.GetXmlPath();
+                BaseTest.test.Info($"Locators xml path: {xmlPath}");
+                var candidates = utilities.XMLLocatorReader.GetLocatorValues(pageName, locatorName);
+                BaseTest.test.Info($"Candidates for {pageName}.{locatorName}: {string.Join(" | ", candidates ?? new List<string>())}");
+            }
+            catch (Exception ex)
+            {
+                BaseTest.test.Warning("Failed to enumerate locator candidates: " + ex.Message);
             }
 
+            var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
             if (locator == null) throw new Exception($"Unable to resolve locator for {pageName}.{locatorName}");
             await locator.ClickAsync();
         }
@@ -53,27 +66,30 @@ namespace PageObjectModelPW.TestCases
         public async Task MouseOver(string pageName, string locatorName)
         {
             BaseTest.test.Info("Hovering over element : " + locatorName);
-            var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
-            if (locator == null)
+            // diagnostic: log candidates
+            try
             {
-                var alt = await RepairAgent.FindAlternativeAsync(_page, pageName, locatorName);
-                if (!string.IsNullOrEmpty(alt)) locator = _page.Locator(alt);
+                var xmlPath = utilities.XMLLocatorReader.GetXmlPath();
+                BaseTest.test.Info($"Locators xml path: {xmlPath}");
+                var candidates = utilities.XMLLocatorReader.GetLocatorValues(pageName, locatorName);
+                BaseTest.test.Info($"Candidates for {pageName}.{locatorName}: {string.Join(" | ", candidates ?? new List<string>())}");
+            }
+            catch (Exception ex)
+            {
+                BaseTest.test.Warning("Failed to enumerate locator candidates: " + ex.Message);
             }
 
+            var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
             if (locator == null) throw new Exception($"Unable to resolve locator for {pageName}.{locatorName}");
             await locator.HoverAsync();
+            Console.WriteLine("Hovered over element: " + locatorName);
+            await Task.Delay(500); // Short delay to allow hover-triggered items to appear
         }
 
         public async Task<string> GetText(string pageName, string locatorName)
         {
             BaseTest.test.Info("Getting text from the element: " + locatorName);
             var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
-            if (locator == null)
-            {
-                var alt = await RepairAgent.FindAlternativeAsync(_page, pageName, locatorName);
-                if (!string.IsNullOrEmpty(alt)) locator = _page.Locator(alt);
-            }
-
             if (locator == null) throw new Exception($"Unable to resolve locator for {pageName}.{locatorName}");
             return await locator.InnerTextAsync();
         }
@@ -82,12 +98,6 @@ namespace PageObjectModelPW.TestCases
         {
             BaseTest.test.Info("Checking visibility of element: " + locatorName);
             var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
-            if (locator == null)
-            {
-                var alt = await RepairAgent.FindAlternativeAsync(_page, pageName, locatorName);
-                if (!string.IsNullOrEmpty(alt)) locator = _page.Locator(alt);
-            }
-
             if (locator == null) return false;
             return await locator.IsVisibleAsync();
         }
@@ -96,12 +106,6 @@ namespace PageObjectModelPW.TestCases
         {
             BaseTest.test.Info($"Selecting value '{value}' from dropdown: {locatorName}");
             var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
-            if (locator == null)
-            {
-                var alt = await RepairAgent.FindAlternativeAsync(_page, pageName, locatorName);
-                if (!string.IsNullOrEmpty(alt)) locator = _page.Locator(alt);
-            }
-
             if (locator == null) throw new Exception($"Unable to resolve locator for {pageName}.{locatorName}");
             await locator.SelectOptionAsync(new SelectOptionValue { Value = value });
         }
@@ -110,12 +114,6 @@ namespace PageObjectModelPW.TestCases
         {
             BaseTest.test.Info($"Waiting for element: {locatorName}");
             var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
-            if (locator == null)
-            {
-                var alt = await RepairAgent.FindAlternativeAsync(_page, pageName, locatorName);
-                if (!string.IsNullOrEmpty(alt)) locator = _page.Locator(alt);
-            }
-
             if (locator == null) throw new Exception($"Unable to resolve locator for {pageName}.{locatorName}");
             await locator.WaitForAsync(new LocatorWaitForOptions { Timeout = timeoutMs });
         }
@@ -124,12 +122,6 @@ namespace PageObjectModelPW.TestCases
         {
             BaseTest.test.Info($"Uploading file '{filePath}' to element: {locatorName}");
             var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
-            if (locator == null)
-            {
-                var alt = await RepairAgent.FindAlternativeAsync(_page, pageName, locatorName);
-                if (!string.IsNullOrEmpty(alt)) locator = _page.Locator(alt);
-            }
-
             if (locator == null) throw new Exception($"Unable to resolve locator for {pageName}.{locatorName}");
             await locator.SetInputFilesAsync(filePath);
         }
@@ -138,12 +130,6 @@ namespace PageObjectModelPW.TestCases
         {
             BaseTest.test.Info("Clearing value of element: " + locatorName);
             var locator = await LocatorResolver.ResolveAsync(_page, pageName, locatorName);
-            if (locator == null)
-            {
-                var alt = await RepairAgent.FindAlternativeAsync(_page, pageName, locatorName);
-                if (!string.IsNullOrEmpty(alt)) locator = _page.Locator(alt);
-            }
-
             if (locator == null) throw new Exception($"Unable to resolve locator for {pageName}.{locatorName}");
             await locator.FillAsync(string.Empty);
         }
