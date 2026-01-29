@@ -170,7 +170,7 @@ namespace PageObjectModelPW.testcases
             await page.SetViewportSizeAsync(1500, 1000);
 
             // Navigate to configured test site URL (use configuration field)
-            var url = configuration?["Appsettings:testsiteurl"];
+            var url = configuration?["Appsettings:logintestwebsiteurl"];
             if (string.IsNullOrWhiteSpace(url))
             {
                 Assert.Fail("Test site URL is not configured (Appsettings:testsiteurl).");
